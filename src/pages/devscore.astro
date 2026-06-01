@@ -1,0 +1,156 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const roles = [
+  "DevOps Engineer",
+  "SRE / Platform Engineer",
+  "Cloud Engineer",
+  "Backend Engineer",
+  "Fullstack Engineer",
+  "MLOps / AI Engineer",
+  "Data Engineer",
+  "Security Engineer",
+];
+---
+
+<BaseLayout
+  title="DevScore - CareerLaunch"
+  description="Get a free score that shows how job-ready your CS profile is, then unlock the full report with an X post or a small payment."
+  path="/devscore"
+  currentPath="/devscore"
+>
+  <section class="devscore-hero">
+    <div>
+      <p class="eyebrow">DevScore</p>
+      <h1>Find out how job-ready you are.</h1>
+      <p class="lede">
+        Submit your GitHub, LinkedIn, resume text and target role. You get a free score out of 100. The full report unlocks with an X post or a small payment.
+      </p>
+      <div class="button-row">
+        <a class="button" href="#devscore-tool">Get my free score</a>
+        <a class="button secondary" href="#how-it-works">How it works</a>
+      </div>
+    </div>
+
+    <aside class="score-preview" aria-label="Example DevScore preview">
+      <div class="score-preview-top">
+        <div>
+          <p class="meta-line">Example score</p>
+          <strong>@csstudent</strong>
+        </div>
+        <div class="score-number">
+          <span>67</span>
+          <small>/100</small>
+        </div>
+      </div>
+      <div class="score-bars">
+        <div><span>GitHub portfolio</span><meter value="72" min="0" max="100">72</meter></div>
+        <div><span>Relevant skills</span><meter value="61" min="0" max="100">61</meter></div>
+        <div><span>Project proof</span><meter value="54" min="0" max="100">54</meter></div>
+        <div><span>Profile clarity</span><meter value="80" min="0" max="100">80</meter></div>
+      </div>
+      <p class="locked-note">Full report locked until X post or paid unlock.</p>
+    </aside>
+  </section>
+
+  <section class="devscore-tool" id="devscore-tool">
+    <div class="section-head">
+      <h2>Get your score</h2>
+      <a href="#unlock">Unlock options</a>
+    </div>
+
+    <div class="tool-grid">
+      <form class="devscore-form" id="devscore-form">
+        <label>
+          <span>GitHub username</span>
+          <input id="github" name="github" autocomplete="username" placeholder="e.g. ilyaselhallaoui" required />
+        </label>
+
+        <label>
+          <span>LinkedIn URL</span>
+          <input id="linkedin" name="linkedin" type="url" placeholder="https://linkedin.com/in/..." />
+        </label>
+
+        <label>
+          <span>Target role</span>
+          <select id="target-role" name="targetRole" required>
+            <option value="">Choose one</option>
+            {roles.map((role) => <option value={role}>{role}</option>)}
+          </select>
+        </label>
+
+        <label>
+          <span>Email for the full report</span>
+          <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required />
+        </label>
+
+        <label class="wide">
+          <span>Resume / CV text</span>
+          <textarea id="cv" name="cv" rows="8" placeholder="Paste your resume text, projects, skills, internships and what you have built."></textarea>
+        </label>
+
+        <button class="button" type="submit">Calculate my DevScore</button>
+      </form>
+
+      <aside class="report-panel" id="report-panel" aria-live="polite">
+        <p class="eyebrow">Your result</p>
+        <div class="empty-result">
+          <h3>No score yet.</h3>
+          <p>Fill the form and DevScore will estimate where your profile stands right now.</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section" id="how-it-works">
+    <div class="section-head">
+      <h2>How it works</h2>
+    </div>
+    <div class="steps-grid">
+      <article class="step-card">
+        <p class="step-index">01</p>
+        <h3>Submit your profile</h3>
+        <p>GitHub, LinkedIn, resume text, email and the role you want.</p>
+      </article>
+      <article class="step-card">
+        <p class="step-index">02</p>
+        <h3>Get the free score</h3>
+        <p>You see the number first. No fake lead magnet, no hidden signup wall.</p>
+      </article>
+      <article class="step-card">
+        <p class="step-index">03</p>
+        <h3>Unlock the report</h3>
+        <p>Pay €5 or post your score on X. Early users can get the full report free by sharing.</p>
+      </article>
+      <article class="step-card">
+        <p class="step-index">04</p>
+        <h3>Build the missing proof</h3>
+        <p>The report tells you what to fix, what to build and what to stop wasting time on.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="unlock">
+    <div class="unlock-band">
+      <div>
+        <p class="eyebrow">Growth loop</p>
+        <h2>Free for students who share their score.</h2>
+        <p>
+          The paid version is simple: €5 for the full report. The early growth version is better: post your score on X, submit the post URL, and unlock the report for free.
+        </p>
+      </div>
+      <div class="unlock-options">
+        <div>
+          <strong>Option A</strong>
+          <span>Post on X and unlock free</span>
+        </div>
+        <div>
+          <strong>Option B</strong>
+          <span>Pay €5 and skip sharing</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/scripts/devscore.js" defer></script>
+</BaseLayout>

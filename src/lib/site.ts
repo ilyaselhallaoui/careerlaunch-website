@@ -9,7 +9,6 @@ export const site = {
 
 export const navItems = [
   { href: "/blog", label: "Blog" },
-  { href: "/devscore", label: "DevScore" },
   { href: "/products", label: "Products" },
 ];
 

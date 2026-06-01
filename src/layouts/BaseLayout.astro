@@ -1,0 +1,46 @@
+---
+import PageHead from "../components/PageHead.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  currentPath: string;
+  type?: "website" | "article";
+  noindex?: boolean;
+  pageJsonLd?: Record<string, unknown> | null;
+}
+
+const {
+  title,
+  description,
+  path,
+  currentPath,
+  type = "website",
+  noindex = false,
+  pageJsonLd = null,
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <PageHead
+      title={title}
+      description={description}
+      path={path}
+      type={type}
+      noindex={noindex}
+      pageJsonLd={pageJsonLd}
+    />
+  </head>
+  <body>
+    <SiteHeader currentPath={currentPath} />
+    <main class="site-frame page">
+      <slot />
+    </main>
+    <SiteFooter />
+  </body>
+</html>

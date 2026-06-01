@@ -1,0 +1,48 @@
+---
+import { fullUrl, siteJsonLd, site } from "../lib/site";
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  type?: "website" | "article";
+  noindex?: boolean;
+  pageJsonLd?: Record<string, unknown> | null;
+}
+
+const {
+  title,
+  description,
+  path,
+  type = "website",
+  noindex = false,
+  pageJsonLd = null,
+} = Astro.props;
+
+const absoluteUrl = fullUrl(path);
+---
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="robots" content={noindex ? "noindex, follow" : "index, follow, max-image-preview:large"} />
+<link rel="canonical" href={absoluteUrl} />
+<meta property="og:type" content={type} />
+<meta property="og:locale" content={site.locale} />
+<meta property="og:url" content={absoluteUrl} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:site_name" content={site.name} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" />
+<link rel="stylesheet" href="/styles/main.css" />
+<script type="application/ld+json" set:html={JSON.stringify(siteJsonLd)} />
+{pageJsonLd && (
+  <script type="application/ld+json" set:html={JSON.stringify(pageJsonLd)} />
+)}

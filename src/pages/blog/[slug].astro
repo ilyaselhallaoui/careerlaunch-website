@@ -1,0 +1,54 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { site } from "../../lib/site";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+const articleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.pubDate,
+  publisher: {
+    "@type": "Organization",
+    name: site.name,
+    url: site.url,
+  },
+};
+---
+
+<BaseLayout
+  title={`${post.data.title} — CareerLaunch`}
+  description={post.data.description}
+  path={`/blog/${post.slug}`}
+  currentPath={`/blog/${post.slug}`}
+  type="article"
+  pageJsonLd={articleJsonLd}
+>
+  <article>
+    <header class="article-header">
+      <p class="eyebrow">{post.data.pubDate}</p>
+      <h1>{post.data.title}</h1>
+      <p class="article-summary">{post.data.description}</p>
+    </header>
+
+    <div class="article-body">
+      <Content />
+    </div>
+
+    <div class="article-cta">
+      <p>If this was useful, the free CareerLaunch challenge is on Skool. <a href={site.skool} target="_blank" rel="noopener noreferrer">Apply here.</a></p>
+    </div>
+  </article>
+</BaseLayout>

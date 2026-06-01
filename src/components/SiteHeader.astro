@@ -1,0 +1,25 @@
+---
+import { isActivePath, navItems } from "../lib/site";
+
+interface Props {
+  currentPath: string;
+}
+
+const { currentPath } = Astro.props;
+---
+
+<header class="site-frame topbar-wrap">
+  <div class="topbar">
+    <a href="/" class="brand">CareerLaunch</a>
+    <nav class="nav-links" aria-label="Primary">
+      {navItems.map((item) => (
+        <a
+          href={item.href}
+          class={isActivePath(currentPath, item.href) ? "is-current" : undefined}
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+  </div>
+</header>

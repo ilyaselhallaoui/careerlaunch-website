@@ -1,0 +1,33 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog")).sort(
+  (a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
+);
+---
+
+<BaseLayout
+  title="Blog — CareerLaunch"
+  description="Practical guides on DevOps, cloud, AI, and CS career paths for students who want to get hired."
+  path="/blog"
+  currentPath="/blog"
+>
+  <section class="hero narrow">
+    <p class="eyebrow">Blog</p>
+    <h1>Guides for CS students.</h1>
+    <p class="lede">Infrastructure, coding, AI, and how to actually get hired.</p>
+  </section>
+
+  <section class="section">
+    <div class="blog-list">
+      {posts.map((post) => (
+        <article class="card">
+          <p class="meta-line">{post.data.pubDate}</p>
+          <h3><a href={`/blog/${post.slug}`}>{post.data.title}</a></h3>
+          <p>{post.data.description}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

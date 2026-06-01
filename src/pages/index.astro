@@ -1,0 +1,61 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { site } from "../lib/site";
+
+const posts = (await getCollection("blog")).sort(
+  (a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
+);
+
+const recentPosts = posts.slice(0, 3);
+---
+
+<BaseLayout
+  title="CareerLaunch — practical guides for CS students who want to get hired"
+  description={site.description}
+  path="/"
+  currentPath="/"
+>
+  <section class="hero">
+    <p class="eyebrow">CareerLaunch</p>
+    <h1>Make your CS degree worth something.</h1>
+    <p class="lede">
+      Practical guides on DevOps, cloud, and AI for CS students who want to become the engineer AI can't replace.
+    </p>
+    <div class="button-row">
+      <a class="button" href="/blog">Read the guides</a>
+      <a class="button secondary" href={site.skool} target="_blank" rel="noopener noreferrer">Challenge — coming soon</a>
+    </div>
+  </section>
+
+  {recentPosts.length > 0 && (
+    <section class="section">
+      <div class="section-head">
+        <h2>Recent posts</h2>
+        <a href="/blog">All posts</a>
+      </div>
+      <div class="blog-list">
+        {recentPosts.map((post) => (
+          <article class="card">
+            <p class="meta-line">{post.data.pubDate}</p>
+            <h3><a href={`/blog/${post.slug}`}>{post.data.title}</a></h3>
+            <p>{post.data.description}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <section class="section">
+    <div class="cta-card">
+      <p class="eyebrow">Free challenge</p>
+      <h2>The free CareerLaunch challenge.</h2>
+      <p class="lede">
+        A 6-month structured path for CS students who want to build the skills companies actually hire for. Launching soon.
+      </p>
+      <div class="button-row">
+        <a class="button" href={site.skool} target="_blank" rel="noopener noreferrer">Join the waitlist on Skool</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
